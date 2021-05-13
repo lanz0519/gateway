@@ -10,11 +10,11 @@
     "pro": "GATEWAY_ENV=pro node server.js"
  },
   "dependencies": {
-    "express-gateway": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway.git",
-    "express-gateway-plugin-ab-test": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-ab-test.git",
-    "express-gateway-plugin-bw-list": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-bw-list.git",
-    "express-gateway-plugin-gzip": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-gzip.git",
-    "express-gateway-plugin-ws-proxy": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-ws-proxy.git",
+    "express-gateway": "https://github.com/lanz0519/express-gateway.git",
+    "express-gateway-plugin-ab-test": "https://github.com/lanz0519/express-gateway-plugin-ab-test.git",
+    "express-gateway-plugin-bw-list": "https://github.com/lanz0519/express-gateway-plugin-bw-list.git",
+    "express-gateway-plugin-gzip": "https://github.com/lanz0519/express-gateway-plugin-gzip.git",
+    "express-gateway-plugin-ws-proxy": "https://github.com/lanz0519/express-gateway-plugin-ws-proxy.git",
     "winston": "3.2.1"
   }
 }
