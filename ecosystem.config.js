@@ -27,7 +27,7 @@ module.exports = {
       user: 'root',
       host: '81.68.141.216',
       ref: 'origin/master',
-      repo: 'git://github.com/lanz0519//gateway.git',
+      repo: 'git://github.com/lanz0519/gateway.git',
       path: '/root/gateway',
       'post-deploy': 'git pull && npm i && pm2 startOrReload ecosystem.config.js --env production'
     }
