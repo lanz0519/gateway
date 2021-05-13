@@ -8,13 +8,13 @@
   "scripts": {
     "dev": "GATEWAY_ENV=dev node server.js",
     "pro": "GATEWAY_ENV=pro node server.js"
- },
+  },
   "dependencies": {
-    "express-gateway": "https://github.com/lanz0519/express-gateway.git",
-    "express-gateway-plugin-ab-test": "https://github.com/lanz0519/express-gateway-plugin-ab-test.git",
-    "express-gateway-plugin-bw-list": "https://github.com/lanz0519/express-gateway-plugin-bw-list.git",
-    "express-gateway-plugin-gzip": "https://github.com/lanz0519/express-gateway-plugin-gzip.git",
-    "express-gateway-plugin-ws-proxy": "https://github.com/lanz0519/express-gateway-plugin-ws-proxy.git",
+    "express-gateway": "git://github.com/lanz0519/express-gateway.git",
+    "express-gateway-plugin-ab-test": "git://github.com/lanz0519/express-gateway-plugin-ab-test.git",
+    "express-gateway-plugin-bw-list": "git://github.com/lanz0519/express-gateway-plugin-bw-list.git",
+    "express-gateway-plugin-gzip": "git://github.com/lanz0519/express-gateway-plugin-gzip.git",
+    "express-gateway-plugin-ws-proxy": "git://github.com/lanz0519/express-gateway-plugin-ws-proxy.git",
     "winston": "3.2.1"
   }
 }
