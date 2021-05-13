@@ -1,0 +1,20 @@
+{
+  "name": "express-gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": {},
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "GATEWAY_ENV=dev node server.js",
+    "pro": "GATEWAY_ENV=pro node server.js"
+ },
+  "dependencies": {
+    "express-gateway": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway.git",
+    "express-gateway-plugin-ab-test": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-ab-test.git",
+    "express-gateway-plugin-bw-list": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-bw-list.git",
+    "express-gateway-plugin-gzip": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-gzip.git",
+    "express-gateway-plugin-ws-proxy": "git+ssh://git@git.oa.kanshan.in:10022/lanz/express-gateway-plugin-ws-proxy.git",
+    "winston": "3.2.1"
+  }
+}

@@ -1,0 +1,99 @@
+apiEndpoints:
+  allStart:
+    host: '*'
+    paths: '/*'
+  lanzTalk:
+    host: '*'
+    paths: '/talk/*'
+  hiXz:
+    host: '*'
+    paths: '/hixz/*'
+  dashboard:
+    host: '*'
+    paths: '/dashboard/*'
+serviceEndpoints:
+  # app下载
+  lanzTalk:
+    url: 'http://127.0.0.1:4001'
+  hiXz:
+    url: 'http://127.0.0.1:5001'
+  dashboard:
+    url: 'http://127.0.0.1:4000'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+  - gzip
+  - request-transformer
+  - response-transformer
+  - terminate
+  # - ab-test
+  # - bw-list
+  - ws-proxy
+pipelines:
+  allStart:
+    apiEndpoints:
+      - allStart
+    policies:
+      - cors:
+          - action:
+              origin: '*'
+              methods: '*'
+              allowedHeaders: '*'
+      # 限制频率
+      # - rate-limit: &rate-limit
+      #     condition:
+      #       name: not
+      #       condition:
+      #         name: pathMatch
+      #         pattern: "/api/*"
+      #     action:
+      #       max: 15
+      #       windowMs: 1000
+      #       rateLimitBy: "${req.ip}"
+      #       delayMs: 0
+      #       message: "请求次数过多，请稍后重试"
+      # gzip
+      - gzip: &gzip
+          - action:
+              level: 5
+              minLength: 1000
+      # 保存用户ip
+      # - request-transformer: &real-ip
+      #   - action:
+      #       headers:
+      #         add:
+      #           x-real-ip: req.ip
+      # - log:
+      #   - action:
+      #       message: 'req'
+      # - proxy:
+      #     action:
+      #       serviceEndpoint: test
+  lanzTalk:
+    apiEndpoints:
+      - lanzTalk
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: lanzTalk
+  hiXz:
+    apiEndpoints:
+      - hiXz
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: hiXz
+  dashboard:
+    apiEndpoints:
+      - dashboard
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: dashboard
+  

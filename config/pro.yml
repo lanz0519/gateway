@@ -1,0 +1,15 @@
+# https:
+#   port: 443
+#   hostname: 81.68.141.216
+#   tls:
+#     "api.kanshanjishui.com":
+#         key: example/keys/2_api.kanshanjishui.com.key
+#         cert: example/keys/1_api.kanshanjishui.com_bundle.crt
+#     "default":
+#         key: example/keys/2_api.kanshan.in.key
+#         cert: example/keys/1_api.kanshan.in_bundle.crt
+http:
+  port: 80
+admin:
+  port: 10001
+  host: 81.68.141.216

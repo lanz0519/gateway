@@ -1,0 +1,13 @@
+http:
+  port: 8080
+# https:
+#   port: 9443
+#   hostname: localhost
+#   http2: true
+#   tls:
+#     "default":
+#         key: example/keys/server.key
+#         cert: example/keys/server.crt
+admin:
+  port: 10001
+  host: localhost

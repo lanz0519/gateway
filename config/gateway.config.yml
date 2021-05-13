@@ -1,0 +1,215 @@
+http:
+  port: 8080
+https:
+  port: 9443
+  hostname: localhost
+  http2: true
+  tls:
+    "default":
+        key: example/keys/server.key
+        cert: example/keys/server.crt
+admin:
+  port: 10001
+  host: localhost
+apiEndpoints:
+  xiamofun:
+    host: '*'
+    paths: '/apk/new.apk'
+  allPointStart:
+    host: '*'
+    paths: '/*'
+  socket.io:
+    host: '*'
+    paths: '/socket.io/*'
+  water-as:
+    host: '*'
+    paths: '/water-as/*'
+  dashboard:
+    host: '*'
+    paths: '/dashboard/*'
+  summerTest:
+    host: '*'
+    paths: '/summer/test/*'
+  summerPay:
+    host: '*'
+    paths: '/summer/pay/*'
+  allSummerPoint:
+    host: '*'
+    paths: '/summer/api/v1/*'
+  summerFunctions:
+    host: '*'
+    paths: '/summer/api/v1/functions/*'
+  summerEnd:
+    host: '*'
+    paths: '/summer/api/v1/*'
+  allPointEnd:
+    host: '*'
+    paths: '/*'
+serviceEndpoints:
+  xiamofun:
+    url: 'https://file.xiamo.fun/apk/new.apk'
+  allPoint:
+    url: 'http://127.0.0.1:3000'
+  # peerJsServer:
+  #   url: 'http://127.0.0.1:9000'
+  socket.io:
+    url: 'https://127.0.0.1:3010/'
+    secure: false
+  water-as:
+    url: 'http://127.0.0.1:4011'
+  dashboard:
+    url: 'http://127.0.0.1:4000'
+  summer:
+    url: 'http://127.0.0.1:1234'
+  summerTest:
+    url: 'http://127.0.0.1:1235'
+  test:
+    url: 'http://127.0.0.1:1234'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+  - gzip
+  - request-transformer
+  - response-transformer
+  - terminate
+  # - ab-test
+  # - bw-list
+  - ws-proxy
+pipelines:
+  xiamofun:
+    apiEndpoints:
+      - xiamofun
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: xiamofun
+            ignorePath: true
+            prependPath: true
+            stripPath: false
+  allPointStart:
+    apiEndpoints:
+      - allPointStart
+    policies:
+      - cors:
+          - action:
+              origin: '*'
+              methods: '*'
+              allowedHeaders: '*'
+      # 限制频率
+      - rate-limit: &rate-limit
+          condition:
+            name: not
+            condition:
+              name: pathMatch
+              pattern: "/api/*"
+          action:
+            max: 15
+            windowMs: 1000
+            rateLimitBy: "${req.ip}"
+            delayMs: 0
+            message: "请求次数过多，请稍后重试"
+      # gzip
+      - gzip: &gzip
+          - action:
+              level: 5
+              minLength: 1000
+      # 保存用户ip
+      - request-transformer: &real-ip
+        - action:
+            headers:
+              add:
+                x-real-ip: req.ip
+      # - proxy:
+      #     action:
+      #       serviceEndpoint: test
+  socket.io:
+    apiEndpoints:
+      - socket.io
+    policies:
+      - ws-proxy:
+          action:
+              target: 'https://localhost:3010'
+  water-as:
+    apiEndpoints:
+      - water-as
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: water-as
+  dashboard:
+    apiEndpoints:
+      - dashboard
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: dashboard
+  summerTest:
+    apiEndpoints:
+      - summerTest
+    policies:
+      - log:
+        - action:
+            message: 'req'
+      - proxy:
+          action:
+            serviceEndpoint: summerTest
+  summerPay:
+    apiEndpoints:
+      - summerPay
+    policies:
+      - log:
+        - action:
+            message: 'req'
+      - proxy:
+          action:
+            serviceEndpoint: summer
+  allSummerPoint:
+    apiEndpoints:
+      - allSummerPoint
+    policies:
+      - log:
+        - action:
+            message: 'req'
+      # 请求头中需要有appid
+      # - terminate: &auth-appid
+      #   - condition:
+      #       name: expression
+      #       expression: "!(req.headers.hasOwnProperty('x-parse-application-id')||req.headers['user-agent'].substr(0,19) == 'node-XMLHttpRequest')"
+      #     action:
+      #       statusCode: 400
+      #       message: 'no auth'
+  summerFunctions:
+    apiEndpoints:
+      - summerFunctions
+    policies:
+      # 验证请求方式是否是post
+      - terminate: &method-post
+        - condition:
+            name: not
+            condition:
+              name: method
+              methods:
+                - POST
+          action:
+            statusCode: 400
+            message: 'method err'
+  summerEnd:
+    apiEndpoints:
+      - summerEnd
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: summer
+  allPointEnd:
+    apiEndpoints:
+      - allPointEnd
+    policies:
+      - proxy:
+          action:
+            serviceEndpoint: allPoint

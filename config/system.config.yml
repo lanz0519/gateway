@@ -1,0 +1,31 @@
+# Core
+db:
+  redis:
+    emulate: true
+    namespace: EG
+
+plugins:
+  gzip:
+    package: 'express-gateway-plugin-gzip'
+  ab-test:
+    package: 'express-gateway-plugin-ab-test'
+  bw-list:
+    package: 'express-gateway-plugin-bw-list'
+  ws-proxy:
+    package: 'express-gateway-plugin-ws-proxy'
+crypto:
+  cipherKey: sensitiveKey
+  algorithm: aes256
+  saltRounds: 50
+
+# OAuth2 Settings
+session:
+  secret: keyboard cat
+  resave: false
+  saveUninitialized: false
+accessTokens:
+  timeToExpiry: 7200000
+refreshTokens:
+  timeToExpiry: 7200000
+authorizationCodes:
+  timeToExpiry: 300000
