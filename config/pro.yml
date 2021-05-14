@@ -9,7 +9,7 @@
 #         key: example/keys/2_api.kanshan.in.key
 #         cert: example/keys/1_api.kanshan.in_bundle.crt
 http:
-  port: 80
+  port: 8080
 admin:
   port: 10001
   host: localhost
